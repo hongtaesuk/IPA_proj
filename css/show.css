@@ -1,0 +1,46 @@
+#players{
+   position : absolute;
+   top : 0px;
+   left : 0px;
+}
+
+#player1{
+    position: absolute;
+    top : 0px;
+    left : 0px;
+}
+#player2{
+    position: absolute;
+    top : 0px;
+    left : 200px;
+}
+#player3{
+    position: absolute;
+    top : 200px;
+    left : 0px;
+}
+#player4{
+    position: absolute;
+    top : 200px;
+    left : 200px;
+}
+
+#form_selection {
+    position : absolute;
+    top : 320px;
+    left : 0px;
+    width : 490px;
+    height : 20px;
+    padding : 10px;
+}
+
+#selection{
+  position : absolute;
+  left : 0px;
+  top : 100px;
+}
+
+
+
+
+

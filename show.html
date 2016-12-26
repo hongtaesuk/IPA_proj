@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- youtube api -->
+<script src="./lib/jquery-2.1.4.min.js"></script>
+<script src="./lib/youtube.iframe_api.js"></script>
+    
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+<?php
+    $conn = mysqli_connect("localhost", "taeugi323", "123123", "IPA_proj");
+    if(!$conn) {
+        echo "DB access fail!\n";
+    }
+
+    $playlist = $_GET['playlist'];
+
+    $select_query = "select * from ".$playlist;
+    $result = mysqli_query($conn, $select_query);
+
+    $playlist_arr = array();
+    $i = 0;
+    //echo gettype($i);
+
+    //////// Get the video information from DB
+    while($row = mysqli_fetch_assoc($result)) {
+        //echo $i;
+        $playlist_arr[$i][0] = $row['id'];
+
+        $start_min = explode(":",$row['start_time'])[0];
+        $start_sec = explode(":",$row['start_time'])[1];
+        $playlist_arr[$i][1] = intval($start_min)*60 + intval($start_sec);
+
+        $end_min = explode(":",$row['end_time'])[0];
+        $end_sec = explode(":",$row['end_time'])[1];
+        $playlist_arr[$i][2] = intval($end_min)*60 + intval($end_sec);
+
+        $i = $i+1;
+    }
+    //////////// For next video
+    //if($i >= 4) {
+        for(;$i<8;$i++) {
+            $playlist_arr[$i][0] = 1;   /// Garbage value
+        }
+    //}
+    /*
+    for($i=0;$i<count($playlist_arr);$i++) {
+        //echo '<script type="text/javascript">',
+        //'playVideo2($playlist_arr[$i][0], $playlist_arr[$i][1], $playlist_arr[$[i][2], "small");',
+        //'</script>';
+        //eho $i." ".$playlist_arr[$i][0]." ";
+        //echo $playlist_arr[$i][1]." ";
+        //echo $playlist_arr[$i][2]." ";
+    }
+    */
+?>
+
+<script type="text/javascript">var playlist_arr =<?php echo json_encode($playlist_arr); ?>;</script>
+<script src="js/videoSample.js"></script>
+<script src="js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="css/show.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+    
+<body>
+
+<div id="players">
+    <div id="player1"></div>
+    <div id="player2"></div>
+    <div id="player3"></div>
+    <div id="player4"></div>
+</div>
+
+<form id="form_selection" action="select.html">
+    <button class="blueBtn" id="selection">Select</button>
+</form>
+    
+</body>
+</html>
+

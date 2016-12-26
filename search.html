@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title> testing youtube API </title>
+
+<!-- youtube api -->
+<script src="./lib/jquery-2.1.4.min.js"></script>
+<script src="./lib/youtube.iframe_api.js"></script>
+    
+<script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
+<script src="https://apis.google.com/js/client.js?onload=googleApiClientReady"></script>
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+<script src="js/videoSample.js"></script>
+<script src="js/main.js"></script>
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+
+</head>
+    
+<body onload="init()">
+    <div id="player"></div>
+    <div id="searchBox" onclick="showSearchBox(this)">
+        <button class="blueBtn" id="searchBtn" onclick="getPlaylist(this)">Search</button>
+    </div>
+    <input id="search" type="text" placeholder="Type here" />
+    
+    <form METHOD="GET" action="php/save.php" id="intervalSet">
+        <input id="startTime" type="text" name="start" placeholder="start time"/>
+        <input id="endTime" type="text" name="end" placeholder="end time" />
+        <input id="video_id" type="hidden" name="video_id" value="" />
+        <br>
+        <?php
+            include("php/table_search.php");
+
+            while( $row = mysqli_fetch_array($result) ) {
+                echo '<input type="radio" name="playlist" value="'.$row[0].'">'.$row[0];
+            }
+        ?>
+        <button class="blueBtn" type="submit" id="confirmBtn">Add</button>
+    </form>
+
+    <form method="post" action="table_create.html" id="createTable">
+        <button class="blueBtn" type="submit" id="createBtn">Create table</button>
+    </form>
+    
+    <div id="playlist">
+        <div id="listThumbs"></div>
+    </div>
+</body>
+</html>
+
